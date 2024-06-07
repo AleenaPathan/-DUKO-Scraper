@@ -1,0 +1,30 @@
+import requests
+from bs4 import BeautifulSoup
+from models import Cryptocurrency
+
+def scrape_cryptocurrencies():
+    url = "https://coinmarketcap.com/"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    cryptocurrencies = []
+    for row in soup.find("table", {"class": "cmc-table"}).find_all("tr")[1:]:
+        columns = row.find_all("td")
+        cryptocurrency = Cryptocurrency(
+            name=columns[1].text.strip(),
+            symbol=columns[2].text.strip(),
+            market_cap=columns[3].text.strip(),
+            volume_24h=columns[4].text.strip(),
+            circulating_supply=columns[5].text.strip(),
+            total_supply=columns[6].text.strip(),
+            max_supply=columns[7].text.strip(),
+            fully_diluted_market_cap=columns[8].text.strip()
+        )
+        cryptocurrencies.append(cryptocurrency)
+
+    return cryptocurrencies
+
+if __name__ == "__main__":
+    cryptocurrencies = scrape_cryptocurrencies()
+    for cryptocurrency in cryptocurrencies:
+        print(cryptocurrency)
