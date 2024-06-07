@@ -1,21 +1,13 @@
-from django.db import models
-
-class Coin(models.Model):
-    name = models.CharField(max_length=255)
-    symbol = models.CharField(max_length=10)
-    price = models.DecimalField(max_digits=20, decimal_places=10)
-    price_change = models.DecimalField(max_digits=20, decimal_places=10)
-    market_cap = models.DecimalField(max_digits=20, decimal_places=10)
-    market_cap_rank = models.IntegerField()
-    volume = models.DecimalField(max_digits=20, decimal_places=10)
-    volume_rank = models.IntegerField()
-    volume_change = models.DecimalField(max_digits=20, decimal_places=10)
-    circulating_supply = models.DecimalField(max_digits=20, decimal_places=10)
-    total_supply = models.DecimalField(max_digits=20, decimal_places=10)
-    diluted_market_cap = models.DecimalField(max_digits=20, decimal_places=10)
-    contracts = models.TextField()
-    official_links = models.TextField()
-    socials = models.TextField()
+class Cryptocurrency:
+    def __init__(self, name, symbol, market_cap, volume_24h, circulating_supply, total_supply, max_supply, fully_diluted_market_cap):
+        self.name = name
+        self.symbol = symbol
+        self.market_cap = market_cap
+        self.volume_24h = volume_24h
+        self.circulating_supply = circulating_supply
+        self.total_supply = total_supply
+        self.max_supply = max_supply
+        self.fully_diluted_market_cap = fully_diluted_market_cap
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.symbol}): {self.market_cap}"
